@@ -19,9 +19,9 @@ jobs:
             - name: Choose correct docker hub tag
               run: |
                   if [[ $GITHUB_REF_NAME == 'main' ]]; then
-                      echo "DOCKER_TAG=latest" >> "$GITHUB_ENV"
+                      echo "DOCKER_TAG=${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$latest" >> "$GITHUB_ENV"
                   else
-                      echo "DOCKER_TAG=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
+                      echo "DOCKER_TAG=${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$GITHUB_REF_NAME" >> "$GITHUB_ENV"
                   fi
 
             - name: Print branch
@@ -55,4 +55,4 @@ jobs:
                   context: ./containers/${{ inputs.container }}
                   file: Dockerfile
                   push: true
-                  tags: "${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$DOCKER_TAG"
+                  tags: $DOCKER_TAG
