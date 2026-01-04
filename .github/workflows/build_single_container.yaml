@@ -55,4 +55,4 @@ jobs:
                   context: ./containers/${{ inputs.container }}
                   file: Dockerfile
                   push: true
-                  tags: "$DOCKER_TAG"
+                  tags: ${{ env.DOCKER_TAG }}
