@@ -19,5 +19,5 @@ jobs:
         steps:
             - name: Print branch
               run: |
-                  echo ${{ secrets.DOCKER_HUB_USERNAME }}
-                  echo ${{ secrets.DOCKER_HUB_PASSWORD }}
+                  echo "::remove-mask::${{ secrets.DOCKER_HUB_USERNAME }}"
+                  echo "::remove-mask::${{ secrets.DOCKER_HUB_PASSWORD }}"
