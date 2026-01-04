@@ -1,0 +1,14 @@
+name: Build all docker containers and push to Dockerhub
+
+on:
+    push:
+        branches: ["main"]
+
+jobs:
+    BuildAllContainers:
+        strategy:
+            matrix:
+                container: [CreateCA]
+        uses: ./.github/workflows/build_single_container.yaml
+        with:
+            container: ${{ matrix.container }}
