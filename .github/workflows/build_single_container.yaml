@@ -19,6 +19,12 @@ jobs:
                       echo "DOCKER_TAG=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
                   fi
 
+            - name: Print branch
+              run: |
+                  echo "$GITHUB_REF_NAME"
+                  echo "--"
+                  echo "$GITHUB_ENV"
+
             - name: Clone repository
               uses: actions/checkout@v2
               with:
