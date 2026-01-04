@@ -30,6 +30,7 @@ jobs:
                   echo "--"
                   echo "::remove-mask::${{ secrets.DOCKER_HUB_USERNAME }}"
                   echo "::remove-mask::${{ secrets.DOCKER_HUB_PASSWORD }}"
+                  echo "${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$DOCKER_TAG"
 
             - name: Clone repository
               uses: actions/checkout@v2
@@ -54,4 +55,4 @@ jobs:
                   context: ./containers/${{ inputs.container }}
                   file: Dockerfile
                   push: true
-                  tags: "${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:${{ $DOCKER_TAG }}"
+                  tags: "${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$DOCKER_TAG"
