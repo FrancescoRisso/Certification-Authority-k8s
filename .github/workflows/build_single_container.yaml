@@ -22,7 +22,7 @@ jobs:
             - name: Clone repository
               uses: actions/checkout@v2
               with:
-                  ref: $GITHUB_REF_NAME
+                  ref: ${{ GITHUB_REF_NAME }}
 
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v2
