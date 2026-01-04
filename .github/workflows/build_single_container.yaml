@@ -23,12 +23,12 @@ jobs:
               run: |
                   echo "$GITHUB_REF_NAME"
                   echo "--"
-                  echo "$GITHUB_ENV"
+                  env
 
             - name: Clone repository
               uses: actions/checkout@v2
               with:
-                  ref: "$GITHUB_REF_NAME"
+                  branch: "$GITHUB_REF_NAME"
 
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v2
