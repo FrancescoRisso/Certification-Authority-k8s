@@ -6,18 +6,10 @@ jobs:
     BuildAllContainers:
         strategy:
             matrix:
-                container: [CreateCA]
+                container: [create_ca]
         uses: ./.github/workflows/build_single_container.yaml
         with:
             container: ${{ matrix.container }}
         secrets:
             DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
             DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
-    tmp:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Print branch
-              run: |
-                  echo "::remove-mask::${{ secrets.DOCKER_HUB_USERNAME }}"
-                  echo "::remove-mask::${{ secrets.DOCKER_HUB_PASSWORD }}"

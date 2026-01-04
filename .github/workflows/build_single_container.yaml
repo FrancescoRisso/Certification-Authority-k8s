@@ -19,18 +19,10 @@ jobs:
             - name: Choose correct docker hub tag
               run: |
                   if [[ $GITHUB_REF_NAME == 'main' ]]; then
-                      echo "DOCKER_TAG=${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$latest" >> "$GITHUB_ENV"
+                      echo "DOCKER_TAG=$latest" >> "$GITHUB_ENV"
                   else
-                      echo "DOCKER_TAG=${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$GITHUB_REF_NAME" >> "$GITHUB_ENV"
+                      echo "DOCKER_TAG=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
                   fi
-
-            - name: Print branch
-              run: |
-                  echo "$GITHUB_REF_NAME"
-                  echo "--"
-                  echo "::remove-mask::${{ secrets.DOCKER_HUB_USERNAME }}"
-                  echo "::remove-mask::${{ secrets.DOCKER_HUB_PASSWORD }}"
-                  echo "${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$DOCKER_TAG"
 
             - name: Clone repository
               uses: actions/checkout@v2
@@ -55,4 +47,4 @@ jobs:
                   context: ./containers/${{ inputs.container }}
                   file: Dockerfile
                   push: true
-                  tags: ${{ env.DOCKER_TAG }}
+                  tags: ${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:${{ env.DOCKER_TAG }}
