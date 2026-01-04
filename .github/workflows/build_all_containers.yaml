@@ -10,4 +10,6 @@ jobs:
         uses: ./.github/workflows/build_single_container.yaml
         with:
             container: ${{ matrix.container }}
-        secrets: inherit
+        secrets:
+            DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+            DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
