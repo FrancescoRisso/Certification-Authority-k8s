@@ -54,4 +54,4 @@ jobs:
                   context: ./containers/${{ inputs.container }}
                   file: Dockerfile
                   push: true
-                  tags: "${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:$DOCKER_TAG"
+                  tags: "${{ secrets.DOCKER_HUB_USERNAME }}/k8sCA-${{ inputs.container }}:${{ $DOCKER_TAG }}"
