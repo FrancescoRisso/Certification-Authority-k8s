@@ -23,7 +23,8 @@ jobs:
               run: |
                   echo "$GITHUB_REF_NAME"
                   echo "--"
-                  env
+                  echo ${{ secrets.DOCKER_HUB_USERNAME }}
+                  echo ${{ secrets.DOCKER_HUB_PASSWORD }}
 
             - name: Clone repository
               uses: actions/checkout@v2
