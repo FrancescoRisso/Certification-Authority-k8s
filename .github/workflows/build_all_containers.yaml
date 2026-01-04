@@ -13,3 +13,11 @@ jobs:
         secrets:
             DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
             DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    tmp:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print branch
+              run: |
+                  echo ${{ secrets.DOCKER_HUB_USERNAME }}
+                  echo ${{ secrets.DOCKER_HUB_PASSWORD }}
