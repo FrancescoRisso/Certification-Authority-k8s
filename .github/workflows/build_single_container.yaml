@@ -44,7 +44,7 @@ jobs:
             - name: Build and push
               uses: docker/build-push-action@v3
               with:
-                  context: ./containers/${{ inputs.container }}
+                  context: /containers/${{ inputs.container }}
                   file: Dockerfile
                   push: true
                   tags: ${{ secrets.DOCKER_HUB_USERNAME }}/k8s_ca-${{ inputs.container }}:${{ env.DOCKER_TAG }}
