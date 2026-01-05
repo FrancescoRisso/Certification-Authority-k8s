@@ -24,14 +24,6 @@ jobs:
                       echo "DOCKER_TAG=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
                   fi
 
-            - name: Debug
-              run: |
-                  ls -la .
-                  echo 
-                  ls -la ./containers
-                  echo 
-                  ls -la ./containers/${{ inputs.container }}
-
             - name: Clone repository
               uses: actions/checkout@v2
               with:
@@ -48,6 +40,14 @@ jobs:
               with:
                   username: ${{ secrets.DOCKER_HUB_USERNAME }}
                   password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+            - name: Debug
+              run: |
+                  ls -la .
+                  echo 
+                  ls -la ./containers
+                  echo 
+                  ls -la ./containers/${{ inputs.container }}
 
             - name: Build and push
               uses: docker/build-push-action@v3
