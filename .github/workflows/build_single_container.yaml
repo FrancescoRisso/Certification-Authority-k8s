@@ -19,7 +19,7 @@ jobs:
             - name: Choose correct docker hub tag
               run: |
                   if [[ $GITHUB_REF_NAME == 'main' ]]; then
-                      echo "DOCKER_TAG=$latest" >> "$GITHUB_ENV"
+                      echo "DOCKER_TAG=latest" >> "$GITHUB_ENV"
                   else
                       echo "DOCKER_TAG=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
                   fi
