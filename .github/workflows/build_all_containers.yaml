@@ -1,0 +1,15 @@
+name: Build all docker containers and push to Dockerhub
+
+on: push
+
+jobs:
+    BuildAllContainers:
+        strategy:
+            matrix:
+                container: [create_ca]
+        uses: ./.github/workflows/build_single_container.yaml
+        with:
+            container: ${{ matrix.container }}
+        secrets:
+            DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+            DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}

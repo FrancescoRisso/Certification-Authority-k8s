@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: "create-ca"
+spec:
+    template:
+        spec:
+            containers:
+                - name: create-ca
+                  image: francescorisso/k8s_ca-create_ca:latest
+                  volumeMounts:
+                      - mountPath: "/certificate"
+                        name: "k8s-ca-certificates"
+                  env:
+                      - name: CA_PASSWORD
+                        valueFrom:
+                            secretKeyRef:
+                                name: k8s-ca-root-pwd
+                                key: password
+                      - name: CERT_DURATION
+                        value: "... (duration of the certificate in days)"
+                      #
+                      # All the following env variables are optional,
+                      # they just specify the optional fields of the certificate
+                      #
+                      # - name: CA_NAME
+                      #   value: "... (name of the CA)"
+                      # - name: CA_COUNTRY
+                      #   value: "... (two-letter code for the country of the CA)"
+                      # - name: CA_STATE_PROVINCE
+                      #   value: "... (state/procince of the CA)"
+                      # - name: CA_LOCALITY
+                      #   value: "... (locality of the CA)"
+                      # - name: CA_ORG
+                      #   value: "... (name of the CA organization)"
+                      # - name: CA_ORG_UNIT
+                      #   value: "... (name of the CA organization unit)"
+                      #
+                      # Enable this env to override the CA with a new one
+                      #
+                      # - name: CA_OVERRIDE_IF_EXISTS
+                      #   value: "1"
+            restartPolicy: Never
+            volumes:
+                - name: "k8s-ca-certificates"
+                  persistentVolumeClaim:
+                      claimName: "k8s-ca-certificates"
+        backoffLimit: 0
