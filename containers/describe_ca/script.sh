@@ -6,6 +6,9 @@ cd /certificate/
 IS_FIRST_PRINT=true
 
 
+env
+
+
 print_title () {
 	local title=$1
 
@@ -19,7 +22,6 @@ print_title () {
 }
 
 print_footer() {
-	IS_FIRST_PRINT=false
 	echo ""
 	echo "-------------------------------------------------------"
 }
@@ -43,12 +45,16 @@ if [[ -z "${ROOT_CERT}" ]]; then
 	print_title "CA certificate:"
 	cat cert.pem
 	print_footer
+else;
+	echo "NO ROOT CERT"
 fi
 
 if [[ -z "${CERTIFICATES}" ]]; then
 	print_title "List of certs emitted by this CA:"
 	find . -maxdepth 1 -type d | tail -n +2 | sed 's@^./@@g'
 	print_footer
+else;
+	echo "NO CERTS"
 fi
 
 if [[ -z "${INSTR_ANDROID}" ]]; then
@@ -69,6 +75,8 @@ if [[ -z "${INSTR_ANDROID}" ]]; then
 	echo "10. Reboot the phone"
 	
 	print_footer
+else;
+	echo "NO ANDROID"
 fi
 
 if [[ -z "${INSTR_W11}" ]]; then
@@ -96,5 +104,7 @@ if [[ -z "${INSTR_W11}" ]]; then
 	echo "20. Click next, then Finish"
 	
 	print_footer
+else;
+	echo "NO W11"
 fi
 

@@ -12,14 +12,6 @@ spec:
                       - mountPath: "/certificate"
                         name: "k8s-ca-certificates"
                   env:
-                      - name: CA_PASSWORD
-                        valueFrom:
-                            secretKeyRef:
-                                name: k8s-ca-root-pwd
-                                key: password
-                      - name: CERT_DURATION
-                        value: "... (duration of the certificate in days)"
-                      #
                       # All the env variables are optional, enable them to print
                       # their data
                       #
