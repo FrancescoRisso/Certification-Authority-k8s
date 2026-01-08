@@ -93,6 +93,7 @@ if [[ ! -z "${INSTR_W11}" ]]; then
 	echo "18. Select Place all certificates in the following store"
 	echo "19. Check that the selected option is Trusted Root Certification Authorities store"
 	echo "20. Click next, then Finish"
+	echo "21. The window can now be closed, there's no need to save the console"
 	
 	print_footer
 fi
