@@ -71,6 +71,6 @@ openssl \
 	-days ${CERT_DURATION} \
 	-extfile description.ext \
 	-sha256 \
-	-passout pass:${CA_PASSWORD}
+	-pass pass:${CA_PASSWORD}
 
 echo "Certificate created"
