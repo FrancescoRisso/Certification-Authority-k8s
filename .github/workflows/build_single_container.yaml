@@ -41,14 +41,6 @@ jobs:
                   username: ${{ secrets.DOCKER_HUB_USERNAME }}
                   password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-            - name: Debug
-              run: |
-                  ls -la .
-                  echo 
-                  ls -la ./containers
-                  echo 
-                  ls -la ./containers/${{ inputs.container }}
-
             - name: Build and push
               uses: docker/build-push-action@v3
               with:

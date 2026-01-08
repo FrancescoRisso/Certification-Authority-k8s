@@ -2,7 +2,7 @@
 
 cd /certificate/
 
-if [ -f .key.pem ]; then
+if [ -f ./key.pem ]; then
 	if [[ -z "${CA_OVERRIDE_IF_EXISTS}" ]]; then
 		echo "ABORTING: attempting to override an existing CA"
 		exit 1

@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: "describe-ca"
+spec:
+    template:
+        spec:
+            containers:
+                - name: describe-ca
+                  image: francescorisso/k8s_ca-describe_ca:latest
+                  volumeMounts:
+                      - mountPath: "/certificate"
+                        name: "k8s-ca-certificates"
+                  env:
+                      - name: CA_PASSWORD
+                        valueFrom:
+                            secretKeyRef:
+                                name: k8s-ca-root-pwd
+                                key: password
+                      - name: CERT_DURATION
+                        value: "... (duration of the certificate in days)"
+                      #
+                      # All the env variables are optional, enable them to print
+                      # their data
+                      #
+                      # - name: ROOT_CERT
+                      #   value: "Print the root certificate (the one that should added to the user devices)"
+                      # - name: CERTIFICATES
+                      #   value: "List the certificates created using this CA"
+                      # - name: INSTR_ANDROID
+                      #   value: "Print instructions for installing the root certificate on Android devices"
+                      # - name: INSTR_W11
+                      #   value: "Print instructions for installing the root certificate on Windows 11 devices"
+                      #
+            restartPolicy: Never
+            volumes:
+                - name: "k8s-ca-certificates"
+                  persistentVolumeClaim:
+                      claimName: "k8s-ca-certificates"
+        backoffLimit: 0
