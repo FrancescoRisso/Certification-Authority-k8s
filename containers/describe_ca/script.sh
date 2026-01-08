@@ -10,17 +10,17 @@ print_title () {
 	local title=$1
 
 	if [ "$IS_FIRST_TITLE" = false ]; then
-		echo ""
+		echo " "
 		IS_FIRST_PRINT=false
 	fi;
 
 	echo "$title"
-	echo ""
+	echo " "
 }
 
 print_footer() {
-	echo ""
-	echo "-------------------------------------------------------"
+	echo " "
+	echo "-----------------------------------------------------------------------------------------"
 }
 
 print_common_instructions() {
@@ -54,7 +54,7 @@ if [[ ! -z "${INSTR_ANDROID}" ]]; then
 	print_title "How to install the root certificate on Android:"
 	
 	echo "Warning: this was only tested on Samsung devices"
-	echo ""
+	echo " "
 	
 	print_common_instructions
 
