@@ -69,8 +69,8 @@ openssl \
 	-CAcreateserial \
 	-out certificate.crt \
 	-days ${CERT_DURATION} \
-	-sha256 \
-	-passout pass:${CA_PASSWORD} \
+	# -sha256 \
+	# -passout pass:${CA_PASSWORD} \
 	-extfile description.ext
 
 echo "Certificate created"
