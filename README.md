@@ -63,3 +63,22 @@ Please note that:
     -   CA exists and `CA_OVERRIDE_IF_EXISTS` is not set
     -   `CERT_DURATION` is not set
     -   unforeseen openssl errors
+
+### 04 - Describe CA
+
+This YAML contains a job that describes the CA stored in the PV.
+
+Different pieces of information can be printed, based on the environment variables that are enabled:
+
+| Env             | Content                                                                      |
+| :-------------- | :--------------------------------------------------------------------------- |
+| `ROOT_CERT`     | Print the root certificate (the one that should added to the user devices)   |
+| `CERTIFICATES`  | List the certificates created using this CA                                  |
+| `INSTR_ANDROID` | Print instructions for installing the root certificate on Android devices    |
+| `INSTR_W11`     | Print instructions for installing the root certificate on Windows 11 devices |
+
+Please note that:
+
+-   after a correct execution, the Job will remain present in the Kubernetes environment, to be able to consult its logs.
+    To run a new one, the previous should be deleted manually.
+-   in case of failure of the container, Kubernetes will restart the pod: it is convenient to delete the job to avoid wasting resources. The container will fail if the CA does not exist.

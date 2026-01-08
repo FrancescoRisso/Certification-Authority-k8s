@@ -6,7 +6,9 @@ jobs:
     BuildAllContainers:
         strategy:
             matrix:
-                container: [create_ca]
+                container:
+                    - create_ca
+                    - describe_ca
         uses: ./.github/workflows/build_single_container.yaml
         with:
             container: ${{ matrix.container }}
