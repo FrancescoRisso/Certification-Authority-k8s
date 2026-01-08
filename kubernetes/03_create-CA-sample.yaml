@@ -28,7 +28,7 @@ spec:
                       # - name: CA_COUNTRY
                       #   value: "... (two-letter code for the country of the CA)"
                       # - name: CA_STATE_PROVINCE
-                      #   value: "... (state/procince of the CA)"
+                      #   value: "... (state/province of the CA)"
                       # - name: CA_LOCALITY
                       #   value: "... (locality of the CA)"
                       # - name: CA_ORG
