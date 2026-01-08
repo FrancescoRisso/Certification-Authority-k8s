@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: "describe-cert"
+spec:
+    template:
+        spec:
+            containers:
+                - name: describe-cert
+                  image: francescorisso/k8s_ca-describe_cert:latest
+                  volumeMounts:
+                      - mountPath: "/certificate"
+                        name: "k8s-ca-certificates"
+                  env:
+                      - name: CERT_ID
+                        value: "... (a filename-acceptable identifier for the certificate, e.g. my-website)"
+                      #
+                      # All the following  env variables are optional, enable them
+                      # to print their data
+                      #
+                      # - name: PRIV_KEY
+                      #   value: "Print the private key generated for the certificate"
+                      # - name: CERT
+                      #   value: "Print the certificate itself"
+                      # - name: CERT_DESCR
+                      #   value: "Print the .ext file used to generate the certificate"
+                      #
+            restartPolicy: Never
+            volumes:
+                - name: "k8s-ca-certificates"
+                  persistentVolumeClaim:
+                      claimName: "k8s-ca-certificates"
+        backoffLimit: 0
