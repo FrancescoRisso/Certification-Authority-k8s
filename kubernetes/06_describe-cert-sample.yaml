@@ -13,7 +13,7 @@ spec:
                         name: "k8s-ca-certificates"
                   env:
                       - name: CERT_ID
-                        value: "... (a filename-acceptable identifier for the certificate, e.g. my-website)"
+                        value: "... (a certificate id)"
                       #
                       # All the following  env variables are optional, enable them
                       # to print their data
