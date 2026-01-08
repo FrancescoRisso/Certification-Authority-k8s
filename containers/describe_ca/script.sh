@@ -27,8 +27,8 @@ print_footer() {
 }
 
 print_common_instructions() {
-	if [[ ! -z "${ROOT_CERT}" ]]; then
-		echo "0. Run this container with the ROOT_CERT env enabled to get the root certificate"
+	if [[ -z "${ROOT_CERT}" ]]; then
+		echo " 0. Run this container with the ROOT_CERT env enabled to get the root certificate"
 	fi
 
 	echo " 1. Copy the root certificate to a file"
@@ -41,23 +41,19 @@ if [ ! -f ./key.pem ]; then
 	exit 1
 fi
 
-if [[ -z "${ROOT_CERT}" ]]; then
+if [[ ! -z "${ROOT_CERT}" ]]; then
 	print_title "CA certificate:"
 	cat cert.pem
 	print_footer
-else
-	echo "NO ROOT CERT"
 fi
 
-if [[ -z "${CERTIFICATES}" ]]; then
+if [[ ! -z "${CERTIFICATES}" ]]; then
 	print_title "List of certs emitted by this CA:"
 	find . -maxdepth 1 -type d | tail -n +2 | sed 's@^./@@g'
 	print_footer
-else
-	echo "NO CERTS"
 fi
 
-if [[ -z "${INSTR_ANDROID}" ]]; then
+if [[ ! -z "${INSTR_ANDROID}" ]]; then
 	print_title "How to install the root certificate on Android:"
 	
 	echo "Warning: this was only tested on Samsung devices"
@@ -75,11 +71,9 @@ if [[ -z "${INSTR_ANDROID}" ]]; then
 	echo "10. Reboot the phone"
 	
 	print_footer
-else
-	echo "NO ANDROID"
 fi
 
-if [[ -z "${INSTR_W11}" ]]; then
+if [[ ! -z "${INSTR_W11}" ]]; then
 	print_title "How to install the root certificate on Windows 11:"
 	
 	print_common_instructions
@@ -104,7 +98,5 @@ if [[ -z "${INSTR_W11}" ]]; then
 	echo "20. Click next, then Finish"
 	
 	print_footer
-else
-	echo "NO W11"
 fi
 
