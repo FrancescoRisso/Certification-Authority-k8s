@@ -6,9 +6,6 @@ cd /certificate/
 IS_FIRST_PRINT=true
 
 
-env
-
-
 print_title () {
 	local title=$1
 
