@@ -65,12 +65,12 @@ openssl \
 	-req \
 	-in request.csr \
 	-CA ../cert.pem \
-	-CAkey ../jey.pem \
+	-CAkey ../key.pem \
 	-CAcreateserial \
 	-out certificate.crt \
 	-days ${CERT_DURATION} \
+	-extfile description.ext
 	# -sha256 \
 	# -passout pass:${CA_PASSWORD} \
-	-extfile description.ext
 
 echo "Certificate created"
