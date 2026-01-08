@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: "create-cert"
+spec:
+    template:
+        spec:
+            containers:
+                - name: create-cert
+                  image: francescorisso/k8s_ca-create_cert:latest
+                  volumeMounts:
+                      - mountPath: "/certificate"
+                        name: "k8s-ca-certificates"
+                  env:
+                      - name: CA_PASSWORD
+                        valueFrom:
+                            secretKeyRef:
+                                name: k8s-ca-root-pwd
+                                key: password
+                      - name: CERT_DURATION
+                        value: "... (duration of the certificate in days)"
+                      - name: CERT_ID
+                        value: "... (a filename-acceptable identifier for the certificate, e.g. my-website)"
+                      - name: CERT_DESCRIPTION
+                        # the .ext file to describe the certificate, edit as required
+                        value: |
+                            authorityKeyIdentifier=keyid,issuer
+                            basicConstraints=CA:FALSE
+                            keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+                            subjectAltName = @alt_names
+
+                            [alt_names]
+                            # DNS.1 = ...
+                            # IP.1 = ...
+                      #
+                      # All the following env variables are optional,
+                      # they just specify the optional fields of the certificate
+                      #
+                      # - name: CERT_NAME
+                      #   value: "... (name of the certificate)"
+                      # - name: CERT_COUNTRY
+                      #   value: "... (two-letter code for the country of the certificate)"
+                      # - name: CERT_STATE_PROVINCE
+                      #   value: "... (state/procince of the certificate)"
+                      # - name: CERT_LOCALITY
+                      #   value: "... (locality of the certificate)"
+                      # - name: CERT_ORG
+                      #   value: "... (name of the certificate organization)"
+                      # - name: CERT_ORG_UNIT
+                      #   value: "... (name of the certificate organization unit)"
+                      #
+            restartPolicy: Never
+            volumes:
+                - name: "k8s-ca-certificates"
+                  persistentVolumeClaim:
+                      claimName: "k8s-ca-certificates"
+        backoffLimit: 0

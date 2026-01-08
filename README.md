@@ -50,8 +50,18 @@ echo "your chosen password" | base64
 
 This YAML contains a job that creates the CA and stores all the required files to disk.
 
-The only required parameter is the duration in days of the root certificate (env `CERT_DURATION`).
-Optional env variables include all the certificate parameters, such as name or country.
+Different parameters can be provided by means of environmental variables:
+
+| Env                     |  Req.   | Effect                                    |
+| :---------------------- | :-----: | :---------------------------------------- |
+| `CERT_DURATION`         | &check; | Duration of the certificate in days       |
+| `CA_NAME`               | &cross; | Name of the CA                            |
+| `CA_COUNTRY`            | &cross; | Two-letter code for the country of the CA |
+| `CA_STATE_PROVINCE`     | &cross; | State/province of the CA                  |
+| `CA_LOCALITY`           | &cross; | Locality of the CA                        |
+| `CA_ORG`                | &cross; | Name of the CA organization               |
+| `CA_ORG_UNIT`           | &cross; | Name of the CA organization unit          |
+| `CA_OVERRIDE_IF_EXISTS` | &cross; | Enable to override the CA with a new one  |
 
 By default, the YAML would not override an existing CA, unless the `CA_OVERRIDE_IF_EXISTS` env variable is enabled.
 
@@ -82,3 +92,32 @@ Please note that:
 -   after a correct execution, the Job will remain present in the Kubernetes environment, to be able to consult its logs.
     To run a new one, the previous should be deleted manually.
 -   in case of failure of the container, Kubernetes will restart the pod: it is convenient to delete the job to avoid wasting resources. The container will fail if the CA does not exist.
+
+### 05 - Create certificate
+
+This YAML contains a job that creates a new certificate and stores all the required files to disk.
+
+Different parameters can be provided by means of environmental variables:
+
+| Env                   |  Req.   | Effect                                                                |
+| :-------------------- | :-----: | :-------------------------------------------------------------------- |
+| `CERT_DURATION`       | &check; | Duration of the certificate in days                                   |
+| `CERT_ID`             | &check; | A filename-acceptable identifier for the certificate, e.g. my-website |
+| `CERT_DESCRIPTION`    | &check; | The .ext file to describe the certificate, edit as required           |
+| `CERT_NAME`           | &cross; | Name of the certificate                                               |
+| `CERT_COUNTRY`        | &cross; | Two-letter code for the country of the certificate                    |
+| `CERT_STATE_PROVINCE` | &cross; | State/province of the certificate                                     |
+| `CERT_LOCALITY`       | &cross; | Locality of the certificate                                           |
+| `CERT_ORG`            | &cross; | Name of the certificate organization                                  |
+| `CERT_ORG_UNIT`       | &cross; | Name of the certificate organization unit                             |
+
+Please note that:
+
+-   after a correct execution, the Job will remain present in the Kubernetes environment, to be able to consult its logs.
+    To run a new one, the previous should be deleted manually.
+-   in case of failure of the container, Kubernetes will restart the pod: it is convenient to delete the job to avoid wasting resources. The container will fail in these cases:
+    -   the CA does not exist
+    -   `CERT_DURATION` is not set
+    -   `CERT_ID` is not set or is already an existing certificate
+    -   `CERT_DESCRIPTION` is not set
+    -   unforeseen openssl errors

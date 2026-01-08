@@ -37,6 +37,6 @@ openssl \
 	-sha256 \
 	-days ${CERT_DURATION} \
 	-passout pass:${CA_PASSWORD} \
-	-subj "/C=${country}/ST=${state_province}/L=${locality}/O=${org}/OU=${unit}CN=${name}/"
+	-subj "/C=${country}/ST=${state_province}/L=${locality}/O=${org}/OU=${unit}/CN=${name}/"
 
 echo "Certification authority created"
