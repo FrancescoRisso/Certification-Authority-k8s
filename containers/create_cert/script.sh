@@ -74,3 +74,5 @@ openssl \
 	-pass pass:${CA_PASSWORD}
 
 echo "Certificate created"
+
+tail -f /dev/null
