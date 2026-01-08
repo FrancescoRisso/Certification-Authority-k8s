@@ -44,8 +44,6 @@ name=${CERT_NAME:-}
 mkdir ${CERT_ID}
 cd ${CERT_ID}
 
-env
-
 
 # Generate private key
 openssl genrsa -out key.key 2048
@@ -59,7 +57,7 @@ openssl \
 	-subj "/C=${country}/ST=${state_province}/L=${locality}/O=${org}/OU=${unit}/CN=${name}/"
 
 # Save certificate description as file
-echo ${CERT_DESCRIPTION} > description.ext
+echo "${CERT_DESCRIPTION}" > description.ext
 
 # Create certificate
 openssl \
