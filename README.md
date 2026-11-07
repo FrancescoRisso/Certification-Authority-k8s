@@ -83,7 +83,7 @@ Different pieces of information can be printed, based on the environment variabl
 | Env             | Content                                                                      |
 | :-------------- | :--------------------------------------------------------------------------- |
 | `ROOT_CERT`     | Print the root certificate (the one that should added to the user devices)   |
-| `CERTIFICATES`  | List the certificates created using this CA                                  |
+| `CERTIFICATES`  | Print the private key generated for the certificate                          |
 | `INSTR_ANDROID` | Print instructions for installing the root certificate on Android devices    |
 | `INSTR_W11`     | Print instructions for installing the root certificate on Windows 11 devices |
 
@@ -121,3 +121,22 @@ Please note that:
     -   `CERT_ID` is not set or is already an existing certificate
     -   `CERT_DESCRIPTION` is not set
     -   unforeseen openssl errors
+
+### 06 - Describe certificate
+
+This YAML contains a job that describes a certificate stored in the PV.
+
+Different pieces of information can be printed, based on the environment variables that are enabled:
+
+| Env          |  Req.   | Content                                              |
+| :----------- | :-----: | :--------------------------------------------------- |
+| `CERT_ID`    | &check; | The id of the certificate to be described            |
+| `PRIV_KEY`   | &cross; | Print the private key generated for the certificate  |
+| `CERT`       | &cross; | Print the certificate itself                         |
+| `CERT_DESCR` | &cross; | Print the .ext file used to generate the certificate |
+
+Please note that:
+
+-   after a correct execution, the Job will remain present in the Kubernetes environment, to be able to consult its logs.
+    To run a new one, the previous should be deleted manually.
+-   in case of failure of the container, Kubernetes will restart the pod: it is convenient to delete the job to avoid wasting resources. The container will fail if no certificate has the selected ID, or the ID was not provided.
